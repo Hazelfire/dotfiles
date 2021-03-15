@@ -139,13 +139,13 @@ in
     python3
     rxvt_unicode
     shutter
-    #teams
+    teams
     trash-cli
     unzip
     urxvt_font_size
     xclip
     zip 
-    #zoom-us
+    zoom-us
     zotero
     chromium
     picom
