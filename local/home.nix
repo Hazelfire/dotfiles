@@ -165,6 +165,9 @@ in
 
   nixpkgs.config = import ../config.nix;
   home.file.".config/nixpkgs/config.nix".source = ../config.nix;
+  xdg.configFile."i3/config".source = ./i3config;
+  home.file.".xinitrc".source = ./.xinitrc;
+  home.file.".i3status".source = ./.i3status.conf;
 
   programs.gpg.enable = true;
   programs.firefox = {
@@ -223,10 +226,13 @@ in
   accounts.email.accounts.student = {
     address = "s3723315@student.rmit.edu.au";
     realName = "Sam Nolan";
-    signature = ''
-      Best Regards
-      Sam Nolan
-    '';
+    signature = {
+      showSignature = "append";
+      text = ''
+        Best Regards
+        Sam Nolan
+      '';
+    };
     userName = "s3723315@student.rmit.edu.au";
     imap = {
       host = "outlook.office365.com";
@@ -249,26 +255,33 @@ in
       tls.enable = true;
     };
     notmuch.enable = true;
+    neomutt.enable = true;
     msmtp.enable = true;
+    folders.inbox = "INBOX";
+
 
   };
+
   accounts.email.accounts.gmail = {
     address = "samnolan555@gmail.com";
     flavor = "gmail.com";
     primary = true;
     realName = "Sam Nolan";
-    signature = ''
-      Best Regards
-      Sam Nolan
-    '';
-    passwordCommand = "pass gmail";
+    signature = {
+      showSignature = "append";
+      text = ''
+        Best Regards
+        Sam Nolan
+      '';
+    };
+    passwordCommand = "pass Internet/Google";
     offlineimap = {
       extraConfig.remote = {
         auth_mechanisms = "XOAUTH2";
         oauth2_client_id = "967969414852-slfb2editmshegfk82pubt0krcvnvum2.apps.googleusercontent.com";
-        oauth2_client_secret_eval = "get_password('organizer client secret')";
+        oauth2_client_secret_eval = "get_pass('gmail', ['pass', 'organizer client secret'])";
         oauth2_request_url = "https://accounts.google.com/o/oauth2/token";
-        oauth2_refresh_token_eval = "get_password('organizer refresh token')";
+        oauth2_refresh_token_eval = "get_pass('gmail', ['pass', 'organizer refresh token'])";
       };
       enable = true;
     };
@@ -277,9 +290,10 @@ in
       host = "smtp.gmail.com";
       tls.enable = true;
     };
+    folders.inbox = "INBOX";
     notmuch.enable = true;
     msmtp.enable = true;
-
+    neomutt.enable = true;
   };
   programs.notmuch.enable = true;
   programs.msmtp.enable = true;
