@@ -165,6 +165,8 @@ in
 
   nixpkgs.config = import ../config.nix;
   home.file.".config/nixpkgs/config.nix".source = ../config.nix;
+  home.file."Images/Haskell.jpg".source = ./Haskell.jpg;
+  home.file.".Xresources.dark".source = ./.Xresources.dark;
   xdg.configFile."i3/config".source = ./i3config;
   home.file.".xinitrc".source = ./.xinitrc;
   home.file.".i3status".source = ./.i3status.conf;

@@ -1,0 +1,64 @@
+#define S_base03        #343633
+#define S_base2         #93867f
+#define S_base1         #645e59
+
+#define S_yellow        #715aff
+#define S_red           #fc5130
+#define S_magenta       #ea638c
+#define S_blue          #d62839
+#define S_cyan          #01baef
+#define S_green         #a682ff
+
+*background:            S_base03
+*foreground:            S_base2
+*fadeColor:             S_base1
+*cursorColor:           S_base2
+*pointerColorBackground:S_base2
+*pointerColorForeground:S_base1
+
+
+!! black dark/light
+*color0:                S_base1
+*color8:                S_base1
+
+!! red dark/light
+*color1:                S_red
+*color9:                S_red
+
+!! green dark/light
+*color2:                S_green
+*color10:               S_green
+
+!! yellow dark/light
+*color3:                S_yellow
+*color11:               S_yellow
+
+!! blue dark/light
+*color4:                S_blue
+*color12:               S_blue
+
+!! magenta dark/light
+*color5:                S_magenta
+*color13:               S_magenta
+
+!! cyan dark/light
+*color6:                S_cyan
+*color14:               S_cyan
+
+!! white dark/light
+*color7:                S_base2
+*color15:               S_base2
+
+URxvt*scrollBar: false
+
+! Appearance
+URxvt.font: xft:Dejavu Sans Mono:size=10 
+
+
+URxvt*termName: xterm
+URxvt.depth: 32
+URxvt.background: rgba:3400/3600/3300/c800
+
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1
