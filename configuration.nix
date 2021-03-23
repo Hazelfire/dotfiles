@@ -51,6 +51,11 @@ in {
       pskRaw= builtins.extraBuiltins.pass "Wifi Dad's Raw";
     };
 
+    
+    "OMSFP18B" = {
+      pskRaw= builtins.extraBuiltins.pass "Flip phone wifi";
+    };
+
     #"RMIT-University" = {
       #auth=''
         #key_mgmt=WPA-EAP

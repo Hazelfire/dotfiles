@@ -5,7 +5,7 @@ let
     builtins.fetchGit {                                                         
       url = "git@github.com:Hazelfire/passwords.git";                           
       ref = "main";                                                           
-      rev = "6e18dd56cda4f8a411198086187be3faa92a6be9";                         
+      rev = "380bbec04fb0084717ef5420b77ce35ca16a39e0";                         
     };
 in
 {
