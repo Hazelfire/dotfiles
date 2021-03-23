@@ -2,18 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, ... }:
+{ config, pkgs, ... }:
 let
-  pkgs = (import (
-    builtins.fetchGit {
-      # Descriptive name to make the store path easier to identify
-      name = "nixos-unstable-2020-03-15";
-      url = "https://github.com/nixos/nixpkgs/";
-      # Commit hash for nixos-unstable as of 2018-09-12
-      # `git ls-remote https://github.com/nixos/nixpkgs nixos-unstable`
-      ref = "refs/heads/nixos-unstable";
-      rev = "9816b99e71c3504b0b4c1f8b2e004148460029d4";
-    })) {config=config;};
   home-manager = 
     builtins.fetchGit {
       name = "home-manager-unstable-2021-03-15";
@@ -43,12 +33,14 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   nix.extraOptions = ''
-    plugin-files = ${pkgs.nix-plugins.override { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
+    substituters = https://cache.nixos.org https://cache.dhall-lang.org https://cache.nixos.org/ https://all-hies.cachix.org https://hercules-ci.cachix.org https://iohk.cachix.org https://nixcache.reflex-frp.org
+    trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.dhall-lang.org:I9/H18WHd60olG5GsIjolp7CtepSgJmM2CsO813VTmM= all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k= hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0= iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo= ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=
   '';
 
   boot.extraModulePackages = [v4l2loopback-dc];
 
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.userControlled.enable = true;
 
   networking.wireless.networks = {
     "Kartelei" = {
@@ -127,7 +119,10 @@ in {
   # networking.firewall.enable = false;
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [pkgs.gutenprint pkgs.gutenprintBin pkgs.foo2zjs ];
+  };
   services.getty = {
     autologinUser="sam";
   };
