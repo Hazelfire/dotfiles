@@ -47,6 +47,7 @@ in {
   '';
 
   boot.extraModulePackages = [v4l2loopback-dc];
+  virtualisation.docker.enable = true;
 
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -177,13 +178,19 @@ in {
   users = {
     users.sam = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
     };
     extraUsers.sam = {
       shell = pkgs.fish;
     };
   };
   home-manager.users.sam = import ./local/home.nix {pkgs=pkgs;config=config;};
+  services.udev.extraRules = ''
+    # UDEV rules for Teensy USB devices
+    ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
+    ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"     SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
+    KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
+  '';
 
 
   # This value determines the NixOS release with which your system is to be
