@@ -123,6 +123,7 @@ in
   services.blueman-applet.enable = false;
 
   home.packages = with pkgs; [
+    hledger
     hueadm
     awscli
     cachix
@@ -169,7 +170,7 @@ in
   home.file.".Xresources.dark".source = ./.Xresources.dark;
   xdg.configFile."i3/config".source = ./i3config;
   home.file.".xinitrc".source = ./.xinitrc;
-  home.file.".i3status".source = ./.i3status.conf;
+  home.file.".i3status.conf".source = ./.i3status.conf;
 
   programs.gpg.enable = true;
   programs.firefox = {
@@ -223,6 +224,10 @@ in
 
   programs.neomutt = {
     enable = true;
+    sidebar = {
+      enable = true;
+    };
+    vimKeys = true;
   };
 
   accounts.email.accounts.student = {
