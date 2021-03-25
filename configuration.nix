@@ -48,14 +48,15 @@ in {
       pskRaw = builtins.extraBuiltins.pass "Wifi Kartelei Raw";
     };
 
-    "DODO_5A95A8" = {
+    "DODO-7B6D" = {
       pskRaw= builtins.extraBuiltins.pass "Wifi Dad's Raw";
     };
-
     
     "OMSFP18B" = {
       pskRaw= builtins.extraBuiltins.pass "Flip phone wifi";
     };
+
+    "Geelong Library" = {};
 
     #"RMIT-University" = {
       #auth=''
