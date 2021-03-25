@@ -160,6 +160,7 @@ in {
     libinput.enable = true;
   };
   
+  programs.adb.enable = true;
 
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
@@ -174,7 +175,7 @@ in {
   users = {
     users.sam = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "wheel" "docker" "adbusers" ]; # Enable ‘sudo’ for the user.
     };
     extraUsers.sam = {
       shell = pkgs.fish;

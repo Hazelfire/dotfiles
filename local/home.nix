@@ -30,6 +30,14 @@ let
       sha256 = "0idnxblirl2493yxpmh69hkikf4w18a4br9mhwpvswzm52dwz5a4";
     };
   };
+  api = import (
+    pkgs.fetchFromGitHub {
+      owner = "Hazelfire";
+      repo = "openapi-cli";
+      rev = "d0aaf5a72ce7fb406553b4a897c5f4f26684d888";
+      sha256 = "12xhs9w6ms7bazbp9ahd7llw96jz2nppmvkkkvzmbl4cc4zkr05z";
+      fetchSubmodules = true;
+    }) {};
 
 
   coqtail = pkgs.vimUtils.buildVimPluginFrom2Nix {
@@ -123,6 +131,9 @@ in
   services.blueman-applet.enable = false;
 
   home.packages = with pkgs; [
+    khard
+    droidcam
+    api
     hledger
     hueadm
     awscli
