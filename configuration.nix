@@ -55,6 +55,9 @@ in {
     "OMSFP18B" = {
       pskRaw= builtins.extraBuiltins.pass "Flip phone wifi";
     };
+    "AndroidAP7c8a" = {
+      pskRaw=builtins.extraBuiltins.pass "Smart phone wifi";
+    };
 
     "Geelong Library" = {};
 

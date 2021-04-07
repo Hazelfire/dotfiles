@@ -204,6 +204,7 @@ in
     enable = true;
     userName = "Sam Nolan";
     userEmail = "samnolan555@gmail.com";
+    ignores = [".envrc"];
   };
 
   programs.neovim = {
