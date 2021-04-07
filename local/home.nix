@@ -316,6 +316,11 @@ in
   programs.notmuch.enable = true;
   programs.msmtp.enable = true;
 
+  programs.emacs = {
+    enable = true;
+    extraPackages = epkgs: [ epkgs.org epkgs.evil epkgs.org-ref ];
+  };
+
 
   services.mpd = {
      enable = true;
