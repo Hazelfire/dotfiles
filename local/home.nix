@@ -131,6 +131,7 @@ in
   services.blueman-applet.enable = false;
 
   home.packages = with pkgs; [
+    signal-cli
     khard
     droidcam
     api
@@ -205,6 +206,9 @@ in
     userName = "Sam Nolan";
     userEmail = "samnolan555@gmail.com";
     ignores = [".envrc"];
+    extraConfig = {
+      pull.rebase = false;
+    };
   };
 
   programs.neovim = {
