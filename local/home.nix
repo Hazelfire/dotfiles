@@ -133,7 +133,7 @@ in
   home.packages = with pkgs; [
     khard
     droidcam
-    api
+    #api
     hledger
     hueadm
     awscli
