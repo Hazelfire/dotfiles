@@ -1,7 +1,7 @@
 fish_vi_key_bindings
 set fish_greeting
 export EDITOR=nvim;
-export BROWSER=chromium;
+export BROWSER=firefox;
 
 function irn
   i3 rename workspace to $argv

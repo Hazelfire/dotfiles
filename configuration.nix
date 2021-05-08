@@ -11,7 +11,6 @@ let
       ref = "refs/heads/master";
       rev = "07f6c6481e0cbbcaf3447f43e964baf99465c8e1";
     };
-  v4l2loopback-dc = config.boot.kernelPackages.callPackage ./v4l2loopback-dc.nix { };
   passwords = 
     builtins.fetchGit {
       url = "git@github.com:Hazelfire/passwords.git";
@@ -32,12 +31,11 @@ in {
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  nix.extraOptions = ''
-    substituters = https://cache.nixos.org https://cache.dhall-lang.org https://cache.nixos.org/ https://all-hies.cachix.org https://hercules-ci.cachix.org https://iohk.cachix.org https://nixcache.reflex-frp.org
-    trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.dhall-lang.org:I9/H18WHd60olG5GsIjolp7CtepSgJmM2CsO813VTmM= all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k= hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0= iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo= ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=
-  '';
+  boot.kernel.sysctl =
+    {
+      "vm.max_map_count" = 262144;
+    };
 
-  boot.extraModulePackages = [v4l2loopback-dc];
   virtualisation.docker.enable = true;
 
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -64,6 +62,7 @@ in {
     };
 
     "Geelong Library" = {};
+    "State Library of Victoria" = {};
 
     #"RMIT-University" = {
       #auth=''
@@ -196,6 +195,7 @@ in {
     KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
   '';
 
+  services.telegraf.enable = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

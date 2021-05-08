@@ -63,7 +63,7 @@ bindsym $mod+Mod1+Down exec ~/.scripts/rotateupside.sh
 #bindsym $mod+d exec firefox https://localhost/$(cd /var/www && find -name \*.html | dmenu -p 'Launch' -nb '$background' -nf '$foreground' -sf '$background' -sb '$cursor')
 bindsym $mod+d exec Discord
 bindsym $mod+z exec zotero
-bindsym $mod+b exec chromium
+bindsym $mod+b exec firefox
 bindsym $mod+c exec urxvt -title 'MyDocFinder' -e docs
 bindsym $mod+t exec urxvt -title 'MyHistoryFinder' -e ff_history
 for_window [title="MyDocFinder"] floating enable
