@@ -20,14 +20,15 @@ let
         install -v -m644 "$src" "$dst/${addonId}.xpi"
       '';
     };
-  kotlin-vim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "kotlin-vim";
-    version = "2020-07-14";
+  stan-vim-plugin = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "stan-vim";
+    version = "2021-05-21";
     src = pkgs.fetchFromGitHub {
-      owner = "udalov";
-      repo = "kotlin-vim";
-      rev = "33606c3163a2dd8c6a1924d6c7ed9e091de9743d";
-      sha256 = "0idnxblirl2493yxpmh69hkikf4w18a4br9mhwpvswzm52dwz5a4";
+      owner = "eigenfoo";
+      repo = "stan-vim";
+      rev = "9d3b6ec149f9559bd9bd021dfa827c29c5d1dc38";
+      sha256 = "0qv748m1vrp1qcl41y7fj2jm8cac9b01ljq6ydq3z4syxdf7yzcc";
+      fetchSubmodules = false;
     };
   };
   api = import (
@@ -210,7 +211,16 @@ in
   programs.neovim = {
     enable = true;
     extraConfig = builtins.readFile ./init.vim;
-    plugins = with pkgs.vimPlugins; [vim-nix vim-surround vim-fugitive vim-rdf coc elm-vim coqtail ];
+    plugins = with pkgs.vimPlugins; [
+      vim-nix 
+      vim-surround 
+      vim-fugitive 
+      vim-rdf 
+      coc 
+      elm-vim 
+      coqtail 
+      stan-vim-plugin 
+    ];
   };
 
   programs.fish = {

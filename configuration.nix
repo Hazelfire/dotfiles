@@ -17,6 +17,7 @@ let
       ref = "master";
       rev = "6e18dd56cda4f8a411198086187be3faa92a6be9";
     };
+  v4l2loopback-dc = config.boot.kernelPackages.callPackage ./v4l2loopback-dc.nix {};
 in {
 
 
@@ -29,6 +30,7 @@ in {
   nixpkgs.config = import ./config.nix;
 
   # Use the systemd-boot EFI boot loader.
+  boot.extraModulePackages = [ v4l2loopback-dc ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernel.sysctl =
