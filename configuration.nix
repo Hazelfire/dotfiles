@@ -59,6 +59,10 @@ in {
       pskRaw=builtins.extraBuiltins.pass "Smart phone wifi";
     };
 
+    "Xperia X Performance_33a0" = {
+      pskRaw=builtins.extraBuiltins.pass "Mums phone key";
+    };
+
     "Geelong Library" = {};
     "State Library of Victoria" = {};
 
