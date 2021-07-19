@@ -167,7 +167,6 @@ in
     ncdu
     dejavu_fonts
     source-serif-pro
-    khal
     vdirsyncer
     ncmpcpp
     abcde
