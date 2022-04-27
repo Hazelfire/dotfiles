@@ -29,5 +29,5 @@ end
 alias o='a -e xdg-open' # quick opening files with xdg-open
 alias rm='rm -i'
 alias cp='cp -i'
-contains $fish_user_paths /path/to/add; or set -Ua fish_user_paths ~/bin
 alias gcal='gcalcli --default-calendar samnolan555@gmail.com'
+alias htime='hledger -f ~/.hledger/time.journal'

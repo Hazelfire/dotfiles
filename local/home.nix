@@ -31,6 +31,16 @@ let
       fetchSubmodules = false;
     };
   };
+  vim-mdx-js = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname="vim-mdx-js";
+    version="2022-03-31";
+    src = pkgs.fetchFromGitHub {
+      owner = "jxnblk";
+      repo = "vim-mdx-js";
+      rev = "17179d7f2a73172af5f9a8d65b01a3acf12ddd50";
+      sha256 = "wfYCvw9JVGG8p8PQhRPT6CeGGf2OVz9SR2KQM0LjQhY=";
+    };
+  };
   api = import (
     pkgs.fetchFromGitHub {
       owner = "Hazelfire";
@@ -80,17 +90,6 @@ let
   };
   
 
-  coc =  pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "coc";
-    version = "2021-02-19";
-    src = pkgs.fetchFromGitHub {
-      owner = "neoclide";
-      repo = "coc.nvim";
-      rev = "a336a8bc251702d9526a6818ae56e86d92fafc0c";
-      sha256 = "0jh5ik1w6qyp9scr9qxi47n7b8xgznknhsriwcpw2axs9ff00zz8";
-      fetchSubmodules = true;
-    };
-  };
   nvim-fzf = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "fzf";
     version = "2020-07-06";
@@ -122,84 +121,51 @@ let
       sha256 = "051piyf403k98zxjv0qm68qhgajwv57hblxdab2awsyvk9gzv5lc";
     };
   };
+  vim-rescript = pkgs.vimUtils.buildVimPlugin {
+    name = "vim-rescript";
+    configurePhase = ''
+      rm Makefile
+    '';
+    src = pkgs.fetchFromGitHub {
+      owner = "rescript-lang";
+      repo = "vim-rescript";
+      rev = "08de54132587131e762b036c11e0e9a9603992fa";
+      sha256 = "1idijazx8cprim27ps7f0bbahjz58vknhyqdqbfhb9sdqcg2llnf";
+      fetchSubmodules = true;
+    };
+  };
 in
 {
   
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   
-  services.udiskie.enable = true;
-  services.blueman-applet.enable = false;
-
   home.packages = with pkgs; [
-    signal-cli
-    khard
-    droidcam
-    #api
-    hledger
-    hueadm
+    #nixlsp
     awscli
     cachix
-    direnv
-    evince
-    feh
-    gitAndTools.hub
-    mydiscord
+    fd
+    hledger
+    hub
     nix-prefetch-git
     nix-prefetch-github
-    #nixlsp
-    nodejs
+    pass
     pavucontrol
-    python3
-    rxvt_unicode
-    shutter
-    teams
+    ripgrep
     trash-cli
     unzip
-    urxvt_font_size
-    xclip
-    zip 
-    zoom-us
-    zotero
-    chromium
-    picom
-    qjackctl
-    ncdu
-    dejavu_fonts
-    source-serif-pro
     vdirsyncer
-    ncmpcpp
-    abcde
-    fswebcam
-    pass
-    niv
+    zip 
+    yarn
   ];
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+
 
 
   nixpkgs.config = import ../config.nix;
-  home.file.".config/nixpkgs/config.nix".source = ../config.nix;
-  home.file."Images/Haskell.jpg".source = ./Haskell.jpg;
-  home.file.".Xresources.dark".source = ./.Xresources.dark;
-  xdg.configFile."i3/config".source = ./i3config;
-  home.file.".xinitrc".source = ./.xinitrc;
-  home.file.".i3status.conf".source = ./.i3status.conf;
 
   programs.gpg.enable = true;
-  programs.firefox = {
-    enable = true;
-    extensions = [
-      (pkgs.fetchFirefoxAddon {
-        name = "lastpass-password-manager"; # Has to be unique!
-        url = "https://addons.mozilla.org/firefox/downloads/file/3693247/lastpass_password_manager-4.62.0.6-an+fx.xpi";
-        sha256 = "4e4cc6061fe44442de7e91c35d6b2cfd2d2b0c2365cfb84dcba5d4e0fae5138c";
-      })
-      (pkgs.fetchFirefoxAddon {
-        name = "english-australian-dictionary"; # Has to be unique!
-        url = "https://addons.mozilla.org/firefox/downloads/file/1163883/english_australian_dictionary-2.2.1webext.xpi";
-        sha256 = "01wibi9ysk6jpbdgd9ndhm6y20sh00lsf5szi1rdfsvsnj1ps81y";
-      })
-    ];
-  };
 
   programs.git = {
     enable = true;
@@ -215,14 +181,22 @@ in
     enable = true;
     extraConfig = builtins.readFile ./init.vim;
     plugins = with pkgs.vimPlugins; [
+      vim-rescript
+      psc-ide-vim
+      vim-pandoc
+      vim-pandoc-syntax
       vim-nix 
       vim-surround 
       vim-fugitive 
       vim-rdf 
-      coc 
+      coc-nvim
+      vim-colors-solarized
+      coc-pyright
       elm-vim 
       coqtail 
       stan-vim-plugin 
+      purescript-vim
+      vim-mdx-js
     ];
   };
 
@@ -332,21 +306,12 @@ in
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [ epkgs.org epkgs.evil epkgs.org-ref ];
+  };
+  services.emacs = {
+    enable = true;
   };
 
 
-  services.mpd = {
-     enable = true;
-     extraConfig = ''
-      audio_output {
-        type "pulse"
-        name "Pulseaudio"
-      }
-    '';
-
-  };
-    
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards

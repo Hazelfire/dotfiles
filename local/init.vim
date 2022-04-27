@@ -2,6 +2,9 @@
 set nohlsearch
 set colorcolumn=80
 
+syntax enable
+set background=dark
+colorscheme solarized
 set shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -17,6 +20,8 @@ nmap <leader>ch <Plug>(coc-action-doHover)
 nmap <leader>cn <Plug>(coc-diagnostic-next)
 nmap <leader>cp <Plug>(coc-diagnostic-prev)
 nmap <leader>cd <Plug>(coc-diagnostic-info)
+nmap <leader>cl <plug>(coc-codelens-action)
+nmap <leader>r :RescriptTypeHint<CR>
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -49,15 +54,3 @@ let g:firenvim_config = {
         \ },
     \ }
 \ }
-function! s:fasd_update() abort
-  if empty(&buftype) || &filetype ==# 'dirvish'
-    call jobstart(['fasd', '-A', expand('%:p')])
-  endif
-endfunction
-augroup fasd
-  autocmd!
-  autocmd BufWinEnter,BufFilePost * call s:fasd_update()
-augroup END
-command! FASD call fzf#run(fzf#wrap({'source': 'fasd -al', 'options': '--no-sort --tac --tiebreak=index'}))
-nnoremap <silent> <Leader>e :FASD<CR>
-nnoremap <silent> <Leader>a :FZF<CR>
