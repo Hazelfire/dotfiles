@@ -41,14 +41,6 @@ let
       sha256 = "wfYCvw9JVGG8p8PQhRPT6CeGGf2OVz9SR2KQM0LjQhY=";
     };
   };
-  api = import (
-    pkgs.fetchFromGitHub {
-      owner = "Hazelfire";
-      repo = "openapi-cli";
-      rev = "d0aaf5a72ce7fb406553b4a897c5f4f26684d888";
-      sha256 = "12xhs9w6ms7bazbp9ahd7llw96jz2nppmvkkkvzmbl4cc4zkr05z";
-      fetchSubmodules = true;
-    }) {};
 
 
   coqtail = pkgs.vimUtils.buildVimPluginFrom2Nix {
@@ -144,19 +136,22 @@ in
     #nixlsp
     awscli
     cachix
+    github-cli
     fd
     hledger
     hub
+    jq
     nix-prefetch-git
     nix-prefetch-github
     pass
     pavucontrol
     ripgrep
+    rsync
     trash-cli
     unzip
     vdirsyncer
-    zip 
     yarn
+    zip 
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
