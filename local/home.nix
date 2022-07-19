@@ -148,6 +148,7 @@ in
     ripgrep
     rsync
     trash-cli
+    nodejs
     unzip
     vdirsyncer
     yarn
