@@ -81,7 +81,6 @@ let
     };
   };
   
-
   nvim-fzf = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "fzf";
     version = "2020-07-06";
@@ -184,8 +183,8 @@ in
       vim-nix 
       vim-surround 
       vim-fugitive 
+      coc-tsserver
       vim-rdf 
-      coc-nvim
       vim-colors-solarized
       coc-pyright
       elm-vim 
@@ -194,6 +193,20 @@ in
       purescript-vim
       vim-mdx-js
     ];
+    coc = {
+      enable = true;
+      settings = {
+        languageserver = {
+          rescript = {
+            enable = true;
+            module = "${vim-rescript}/server/out/server.js";
+            args = ["--node-ipc"];
+            filetypes = ["rescript"];
+            rootPatterns = ["bsconfig.json"];
+          };
+        };
+      };
+    };
   };
 
   programs.fish = {
