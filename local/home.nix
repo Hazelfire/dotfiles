@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 let
+  nixpkgs = import <nixpkgs> {};
   mydiscord = pkgs.callPackage ./discord {pkgs = pkgs; };
   nixlsp = import (pkgs.fetchgit (import ./nixlsp.nix)) {pkgs=pkgs;};
 
@@ -134,6 +135,7 @@ in
   home.packages = with pkgs; [
     #nixlsp
     awscli
+    obsidian
     cachix
     github-cli
     fd
@@ -166,7 +168,7 @@ in
     enable = true;
     userName = "Sam Nolan";
     userEmail = "samnolan555@gmail.com";
-    ignores = [".envrc"];
+    ignores = [".envrc"  ".direnv"];
     extraConfig = {
       pull.rebase = false;
     };
@@ -176,17 +178,19 @@ in
     enable = true;
     extraConfig = builtins.readFile ./init.vim;
     plugins = with pkgs.vimPlugins; [
+      editorconfig-vim
       vim-rescript
       psc-ide-vim
       vim-pandoc
       vim-pandoc-syntax
+      coc-tsserver
+      coc-eslint
+      coc-r-lsp
       vim-nix 
       vim-surround 
       vim-fugitive 
-      coc-tsserver
       vim-rdf 
       vim-colors-solarized
-      coc-pyright
       elm-vim 
       coqtail 
       stan-vim-plugin 
@@ -195,7 +199,9 @@ in
     ];
     coc = {
       enable = true;
+      package = nixpkgs.vimPlugins.coc-nvim;
       settings = {
+        eslint.autoFixOnSave = true;
         languageserver = {
           rescript = {
             enable = true;
@@ -212,6 +218,7 @@ in
   programs.fish = {
     enable = true;
     shellInit= builtins.readFile ./config.fish;
+    shellAliases = { mv = "mv -i"; };
   };
 
   programs.tmux = {
